@@ -177,6 +177,22 @@ Referencias:
 - [LIVE-SETUP-CHECKLIST.md](./docs/LIVE-SETUP-CHECKLIST.md)
 - [ENGINEER-HANDOFF.md](./docs/ENGINEER-HANDOFF.md)
 
+## Flujo de trabajo
+
+| Rama | Environment (GitHub) | Uso |
+|---|---|---|
+| `develop` (default) | `staging` | Integración: acá entran fixes y features, por PR o push directo. |
+| `main` | `production` | Producción: solo recibe merges desde `develop`. |
+
+CI (`.github/workflows/ci.yml`) corre en cada push a `develop`/`main` y en cada PR. Para reproducirlo local:
+
+```bash
+npm ci
+npm run check
+```
+
+**Promover a producción:** PR `develop → main` (o `git checkout main && git merge --ff-only develop && git push`). El runtime corre en un VPS; el deploy es manual.
+
 ## Licencia
 
 MIT. Ver [LICENSE](./LICENSE).
